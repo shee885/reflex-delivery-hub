@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DispatcherRouteImport } from './routes/dispatcher'
 import { Route as RetailerRouteImport } from './routes/retailer'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as DispatcherIndexRouteImport } from './routes/dispatcher.index'
 import { Route as RetailerIndexRouteImport } from './routes/retailer.index'
 import { Route as RetailerDeliveriesRouteImport } from './routes/retailer.deliveries'
 import { Route as RetailerNewRouteImport } from './routes/retailer.new'
@@ -37,6 +38,11 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DispatcherIndexRoute = DispatcherIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DispatcherRoute,
+} as any)
 const RetailerIndexRoute = RetailerIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,29 +61,31 @@ const RetailerNewRoute = RetailerNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dispatcher': typeof DispatcherRoute
+  '/dispatcher': typeof DispatcherRouteWithChildren
   '/retailer': typeof RetailerRouteWithChildren
   '/track': typeof TrackRoute
   '/retailer/deliveries': typeof RetailerDeliveriesRoute
   '/retailer/new': typeof RetailerNewRoute
+  '/dispatcher/': typeof DispatcherIndexRoute
   '/retailer/': typeof RetailerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dispatcher': typeof DispatcherRoute
   '/track': typeof TrackRoute
   '/retailer/deliveries': typeof RetailerDeliveriesRoute
   '/retailer/new': typeof RetailerNewRoute
+  '/dispatcher': typeof DispatcherIndexRoute
   '/retailer': typeof RetailerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/dispatcher': typeof DispatcherRoute
+  '/dispatcher': typeof DispatcherRouteWithChildren
   '/retailer': typeof RetailerRouteWithChildren
   '/track': typeof TrackRoute
   '/retailer/deliveries': typeof RetailerDeliveriesRoute
   '/retailer/new': typeof RetailerNewRoute
+  '/dispatcher/': typeof DispatcherIndexRoute
   '/retailer/': typeof RetailerIndexRoute
 }
 export interface FileRouteTypes {
@@ -89,14 +97,15 @@ export interface FileRouteTypes {
     | '/track'
     | '/retailer/deliveries'
     | '/retailer/new'
+    | '/dispatcher/'
     | '/retailer/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/dispatcher'
     | '/track'
     | '/retailer/deliveries'
     | '/retailer/new'
+    | '/dispatcher'
     | '/retailer'
   id:
     | '__root__'
@@ -106,12 +115,13 @@ export interface FileRouteTypes {
     | '/track'
     | '/retailer/deliveries'
     | '/retailer/new'
+    | '/dispatcher/'
     | '/retailer/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DispatcherRoute: typeof DispatcherRoute
+  DispatcherRoute: typeof DispatcherRouteWithChildren
   RetailerRoute: typeof RetailerRouteWithChildren
   TrackRoute: typeof TrackRoute
 }
@@ -146,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dispatcher/': {
+      id: '/dispatcher/'
+      path: '/'
+      fullPath: '/dispatcher/'
+      preLoaderRoute: typeof DispatcherIndexRouteImport
+      parentRoute: typeof DispatcherRoute
+    }
     '/retailer/': {
       id: '/retailer/'
       path: '/'
@@ -170,6 +187,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DispatcherRouteChildren {
+  DispatcherIndexRoute: typeof DispatcherIndexRoute
+}
+
+const DispatcherRouteChildren: DispatcherRouteChildren = {
+  DispatcherIndexRoute: DispatcherIndexRoute,
+}
+
+const DispatcherRouteWithChildren = DispatcherRoute._addFileChildren(
+  DispatcherRouteChildren,
+)
+
 interface RetailerRouteChildren {
   RetailerDeliveriesRoute: typeof RetailerDeliveriesRoute
   RetailerNewRoute: typeof RetailerNewRoute
@@ -188,7 +217,7 @@ const RetailerRouteWithChildren = RetailerRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DispatcherRoute: DispatcherRoute,
+  DispatcherRoute: DispatcherRouteWithChildren,
   RetailerRoute: RetailerRouteWithChildren,
   TrackRoute: TrackRoute,
 }
