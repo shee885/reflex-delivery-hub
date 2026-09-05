@@ -10,33 +10,179 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DispatcherRouteImport } from './routes/dispatcher'
+import { Route as RetailerRouteImport } from './routes/retailer'
+import { Route as RiderRouteImport } from './routes/rider'
+import { Route as TrackRouteImport } from './routes/track'
+import { Route as DispatcherIndexRouteImport } from './routes/dispatcher.index'
+import { Route as DispatcherDeliveriesRouteImport } from './routes/dispatcher.deliveries'
+import { Route as DispatcherRidersRouteImport } from './routes/dispatcher.riders'
+import { Route as RetailerIndexRouteImport } from './routes/retailer.index'
+import { Route as RetailerDeliveriesRouteImport } from './routes/retailer.deliveries'
+import { Route as RetailerNewRouteImport } from './routes/retailer.new'
+import { Route as RiderIndexRouteImport } from './routes/rider.index'
+import { Route as RiderHistoryRouteImport } from './routes/rider.history'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DispatcherRoute = DispatcherRouteImport.update({
+  id: '/dispatcher',
+  path: '/dispatcher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RetailerRoute = RetailerRouteImport.update({
+  id: '/retailer',
+  path: '/retailer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiderRoute = RiderRouteImport.update({
+  id: '/rider',
+  path: '/rider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DispatcherIndexRoute = DispatcherIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DispatcherRoute,
+} as any)
+const DispatcherDeliveriesRoute = DispatcherDeliveriesRouteImport.update({
+  id: '/deliveries',
+  path: '/deliveries',
+  getParentRoute: () => DispatcherRoute,
+} as any)
+const DispatcherRidersRoute = DispatcherRidersRouteImport.update({
+  id: '/riders',
+  path: '/riders',
+  getParentRoute: () => DispatcherRoute,
+} as any)
+const RetailerIndexRoute = RetailerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RetailerRoute,
+} as any)
+const RetailerDeliveriesRoute = RetailerDeliveriesRouteImport.update({
+  id: '/deliveries',
+  path: '/deliveries',
+  getParentRoute: () => RetailerRoute,
+} as any)
+const RetailerNewRoute = RetailerNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => RetailerRoute,
+} as any)
+const RiderIndexRoute = RiderIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RiderRoute,
+} as any)
+const RiderHistoryRoute = RiderHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => RiderRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dispatcher': typeof DispatcherRouteWithChildren
+  '/retailer': typeof RetailerRouteWithChildren
+  '/rider': typeof RiderRouteWithChildren
+  '/track': typeof TrackRoute
+  '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
+  '/dispatcher/riders': typeof DispatcherRidersRoute
+  '/retailer/deliveries': typeof RetailerDeliveriesRoute
+  '/retailer/new': typeof RetailerNewRoute
+  '/rider/history': typeof RiderHistoryRoute
+  '/dispatcher/': typeof DispatcherIndexRoute
+  '/retailer/': typeof RetailerIndexRoute
+  '/rider/': typeof RiderIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/track': typeof TrackRoute
+  '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
+  '/dispatcher/riders': typeof DispatcherRidersRoute
+  '/retailer/deliveries': typeof RetailerDeliveriesRoute
+  '/retailer/new': typeof RetailerNewRoute
+  '/rider/history': typeof RiderHistoryRoute
+  '/dispatcher': typeof DispatcherIndexRoute
+  '/retailer': typeof RetailerIndexRoute
+  '/rider': typeof RiderIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dispatcher': typeof DispatcherRouteWithChildren
+  '/retailer': typeof RetailerRouteWithChildren
+  '/rider': typeof RiderRouteWithChildren
+  '/track': typeof TrackRoute
+  '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
+  '/dispatcher/riders': typeof DispatcherRidersRoute
+  '/retailer/deliveries': typeof RetailerDeliveriesRoute
+  '/retailer/new': typeof RetailerNewRoute
+  '/rider/history': typeof RiderHistoryRoute
+  '/dispatcher/': typeof DispatcherIndexRoute
+  '/retailer/': typeof RetailerIndexRoute
+  '/rider/': typeof RiderIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dispatcher'
+    | '/retailer'
+    | '/rider'
+    | '/track'
+    | '/dispatcher/deliveries'
+    | '/dispatcher/riders'
+    | '/retailer/deliveries'
+    | '/retailer/new'
+    | '/rider/history'
+    | '/dispatcher/'
+    | '/retailer/'
+    | '/rider/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/track'
+    | '/dispatcher/deliveries'
+    | '/dispatcher/riders'
+    | '/retailer/deliveries'
+    | '/retailer/new'
+    | '/rider/history'
+    | '/dispatcher'
+    | '/retailer'
+    | '/rider'
+  id:
+    | '__root__'
+    | '/'
+    | '/dispatcher'
+    | '/retailer'
+    | '/rider'
+    | '/track'
+    | '/dispatcher/deliveries'
+    | '/dispatcher/riders'
+    | '/retailer/deliveries'
+    | '/retailer/new'
+    | '/rider/history'
+    | '/dispatcher/'
+    | '/retailer/'
+    | '/rider/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DispatcherRoute: typeof DispatcherRouteWithChildren
+  RetailerRoute: typeof RetailerRouteWithChildren
+  RiderRoute: typeof RiderRouteWithChildren
+  TrackRoute: typeof TrackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +194,143 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dispatcher': {
+      id: '/dispatcher'
+      path: '/dispatcher'
+      fullPath: '/dispatcher'
+      preLoaderRoute: typeof DispatcherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/retailer': {
+      id: '/retailer'
+      path: '/retailer'
+      fullPath: '/retailer'
+      preLoaderRoute: typeof RetailerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rider': {
+      id: '/rider'
+      path: '/rider'
+      fullPath: '/rider'
+      preLoaderRoute: typeof RiderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dispatcher/': {
+      id: '/dispatcher/'
+      path: '/'
+      fullPath: '/dispatcher/'
+      preLoaderRoute: typeof DispatcherIndexRouteImport
+      parentRoute: typeof DispatcherRoute
+    }
+    '/dispatcher/deliveries': {
+      id: '/dispatcher/deliveries'
+      path: '/deliveries'
+      fullPath: '/dispatcher/deliveries'
+      preLoaderRoute: typeof DispatcherDeliveriesRouteImport
+      parentRoute: typeof DispatcherRoute
+    }
+    '/dispatcher/riders': {
+      id: '/dispatcher/riders'
+      path: '/riders'
+      fullPath: '/dispatcher/riders'
+      preLoaderRoute: typeof DispatcherRidersRouteImport
+      parentRoute: typeof DispatcherRoute
+    }
+    '/retailer/': {
+      id: '/retailer/'
+      path: '/'
+      fullPath: '/retailer/'
+      preLoaderRoute: typeof RetailerIndexRouteImport
+      parentRoute: typeof RetailerRoute
+    }
+    '/retailer/deliveries': {
+      id: '/retailer/deliveries'
+      path: '/deliveries'
+      fullPath: '/retailer/deliveries'
+      preLoaderRoute: typeof RetailerDeliveriesRouteImport
+      parentRoute: typeof RetailerRoute
+    }
+    '/retailer/new': {
+      id: '/retailer/new'
+      path: '/new'
+      fullPath: '/retailer/new'
+      preLoaderRoute: typeof RetailerNewRouteImport
+      parentRoute: typeof RetailerRoute
+    }
+    '/rider/': {
+      id: '/rider/'
+      path: '/'
+      fullPath: '/rider/'
+      preLoaderRoute: typeof RiderIndexRouteImport
+      parentRoute: typeof RiderRoute
+    }
+    '/rider/history': {
+      id: '/rider/history'
+      path: '/history'
+      fullPath: '/rider/history'
+      preLoaderRoute: typeof RiderHistoryRouteImport
+      parentRoute: typeof RiderRoute
+    }
   }
 }
 
+interface DispatcherRouteChildren {
+  DispatcherDeliveriesRoute: typeof DispatcherDeliveriesRoute
+  DispatcherRidersRoute: typeof DispatcherRidersRoute
+  DispatcherIndexRoute: typeof DispatcherIndexRoute
+}
+
+const DispatcherRouteChildren: DispatcherRouteChildren = {
+  DispatcherDeliveriesRoute: DispatcherDeliveriesRoute,
+  DispatcherRidersRoute: DispatcherRidersRoute,
+  DispatcherIndexRoute: DispatcherIndexRoute,
+}
+
+const DispatcherRouteWithChildren = DispatcherRoute._addFileChildren(
+  DispatcherRouteChildren,
+)
+
+interface RetailerRouteChildren {
+  RetailerDeliveriesRoute: typeof RetailerDeliveriesRoute
+  RetailerNewRoute: typeof RetailerNewRoute
+  RetailerIndexRoute: typeof RetailerIndexRoute
+}
+
+const RetailerRouteChildren: RetailerRouteChildren = {
+  RetailerDeliveriesRoute: RetailerDeliveriesRoute,
+  RetailerNewRoute: RetailerNewRoute,
+  RetailerIndexRoute: RetailerIndexRoute,
+}
+
+const RetailerRouteWithChildren = RetailerRoute._addFileChildren(
+  RetailerRouteChildren,
+)
+
+interface RiderRouteChildren {
+  RiderHistoryRoute: typeof RiderHistoryRoute
+  RiderIndexRoute: typeof RiderIndexRoute
+}
+
+const RiderRouteChildren: RiderRouteChildren = {
+  RiderHistoryRoute: RiderHistoryRoute,
+  RiderIndexRoute: RiderIndexRoute,
+}
+
+const RiderRouteWithChildren = RiderRoute._addFileChildren(RiderRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DispatcherRoute: DispatcherRouteWithChildren,
+  RetailerRoute: RetailerRouteWithChildren,
+  RiderRoute: RiderRouteWithChildren,
+  TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
