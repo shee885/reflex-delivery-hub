@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RetailerRouteImport } from './routes/retailer'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as RetailerIndexRouteImport } from './routes/retailer.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,34 +29,41 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RetailerIndexRoute = RetailerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => RetailerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/retailer': typeof RetailerRoute
+  '/retailer': typeof RetailerRouteWithChildren
   '/track': typeof TrackRoute
+  '/retailer/': typeof RetailerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/retailer': typeof RetailerRoute
   '/track': typeof TrackRoute
+  '/retailer': typeof RetailerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/retailer': typeof RetailerRoute
+  '/retailer': typeof RetailerRouteWithChildren
   '/track': typeof TrackRoute
+  '/retailer/': typeof RetailerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/retailer' | '/track'
+  fullPaths: '/' | '/retailer' | '/track' | '/retailer/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/retailer' | '/track'
-  id: '__root__' | '/' | '/retailer' | '/track'
+  to: '/' | '/track' | '/retailer'
+  id: '__root__' | '/' | '/retailer' | '/track' | '/retailer/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  RetailerRoute: typeof RetailerRoute
+  RetailerRoute: typeof RetailerRouteWithChildren
   TrackRoute: typeof TrackRoute
 }
 
@@ -82,12 +90,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/retailer/': {
+      id: '/retailer/'
+      path: '/'
+      fullPath: '/retailer/'
+      preLoaderRoute: typeof RetailerIndexRouteImport
+      parentRoute: typeof RetailerRoute
+    }
   }
 }
 
+interface RetailerRouteChildren {
+  RetailerIndexRoute: typeof RetailerIndexRoute
+}
+
+const RetailerRouteChildren: RetailerRouteChildren = {
+  RetailerIndexRoute: RetailerIndexRoute,
+}
+
+const RetailerRouteWithChildren = RetailerRoute._addFileChildren(
+  RetailerRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  RetailerRoute: RetailerRoute,
+  RetailerRoute: RetailerRouteWithChildren,
   TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
