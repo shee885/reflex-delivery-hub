@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DispatcherRouteImport } from './routes/dispatcher'
 import { Route as RetailerRouteImport } from './routes/retailer'
+import { Route as RiderRouteImport } from './routes/rider'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as DispatcherIndexRouteImport } from './routes/dispatcher.index'
 import { Route as DispatcherDeliveriesRouteImport } from './routes/dispatcher.deliveries'
@@ -33,6 +34,11 @@ const DispatcherRoute = DispatcherRouteImport.update({
 const RetailerRoute = RetailerRouteImport.update({
   id: '/retailer',
   path: '/retailer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiderRoute = RiderRouteImport.update({
+  id: '/rider',
+  path: '/rider',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackRoute = TrackRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dispatcher': typeof DispatcherRouteWithChildren
   '/retailer': typeof RetailerRouteWithChildren
+  '/rider': typeof RiderRoute
   '/track': typeof TrackRoute
   '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
   '/dispatcher/riders': typeof DispatcherRidersRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rider': typeof RiderRoute
   '/track': typeof TrackRoute
   '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
   '/dispatcher/riders': typeof DispatcherRidersRoute
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dispatcher': typeof DispatcherRouteWithChildren
   '/retailer': typeof RetailerRouteWithChildren
+  '/rider': typeof RiderRoute
   '/track': typeof TrackRoute
   '/dispatcher/deliveries': typeof DispatcherDeliveriesRoute
   '/dispatcher/riders': typeof DispatcherRidersRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dispatcher'
     | '/retailer'
+    | '/rider'
     | '/track'
     | '/dispatcher/deliveries'
     | '/dispatcher/riders'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/rider'
     | '/track'
     | '/dispatcher/deliveries'
     | '/dispatcher/riders'
@@ -134,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dispatcher'
     | '/retailer'
+    | '/rider'
     | '/track'
     | '/dispatcher/deliveries'
     | '/dispatcher/riders'
@@ -147,6 +159,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DispatcherRoute: typeof DispatcherRouteWithChildren
   RetailerRoute: typeof RetailerRouteWithChildren
+  RiderRoute: typeof RiderRoute
   TrackRoute: typeof TrackRoute
 }
 
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       path: '/retailer'
       fullPath: '/retailer'
       preLoaderRoute: typeof RetailerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rider': {
+      id: '/rider'
+      path: '/rider'
+      fullPath: '/rider'
+      preLoaderRoute: typeof RiderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/track': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DispatcherRoute: DispatcherRouteWithChildren,
   RetailerRoute: RetailerRouteWithChildren,
+  RiderRoute: RiderRoute,
   TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
