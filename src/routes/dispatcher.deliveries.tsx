@@ -11,7 +11,7 @@ import { useReflex } from "@/lib/reflex/store";
 import type { Delivery } from "@/lib/reflex/types";
 
 export const Route = createFileRoute("/dispatcher/deliveries")({
-  component: DispatcherDeliveries;
+  component: DispatcherDeliveries,
 });
 
 function DispatcherDeliveries() {
